@@ -1,0 +1,426 @@
+{ "name": "Niml",
+  "scopeName": "source.niml",
+  "fileTypes": ["niml"],
+  "patterns": [
+    { "include": "source.jinja" },
+    { "include": "text.html.basic" },
+    { "include": "#tagblock" },
+    { "include": "#variable" },
+    { "include": "#comment" },
+    { "include": "#cssblock" },
+    { "include": "#sassblock" },
+    { "include": "#cocoblock" },
+    { "include": "#coffeeblock" },
+    { "include": "#jsblock" },
+    { "include": "#plainblock" },
+    { "include": "#jinjablock" }
+  ],
+  "repository": {
+    "tagblock": {
+      "begin": "((@/?[\\w:-]+)|(\\.[-:\\w]+)|(#[-:\\w]+))",
+      "end": "(?!\\s*(\\.[-:\\$\\w]+|#[-:\\$\\w]+|[-\\$:\\w]+=|\\\\[-\\$:\\w]+))",
+      "patterns": [
+        { "include": "#class" },
+        { "include": "#id" },
+        { "include": "#attrib" },
+        { "include": "#singleprop" }
+      ],
+      "beginCaptures": {
+        "2": {"name": "entity.niml"},
+        "3": {"name": "storage.type.niml"},
+        "4": {"name": "keyword.source.niml"}
+     }
+    },
+    "jinjablock": {
+      "begin": "^\\s*%",
+      "end": "$",
+      "patterns": [
+        { "include": "#expression" }
+      ],
+      "name": "support.other.niml"
+    },
+    "plainblock": {
+      "begin": "(\\s*)(:)(plain)\\s*",
+      "end": "^(?!(\\1\\s+|\\s*$))",
+      "patterns": [
+      ],
+      "beginCaptures": {
+        "2": { "name": "constant.other.niml" },
+        "3": { "name": "constant.language.niml" }
+      }
+    },
+    "cssblock": {
+      "begin": "(\\s*)(:)(s?css)\\s*",
+      "end": "^(?!(\\1\\s+|\\s*$))",
+      "patterns": [
+        { "include": "source.scss" }
+      ],
+      "beginCaptures": {
+        "2": { "name": "constant.other.niml" },
+        "3": { "name": "constant.language.niml" }
+      }
+    },
+    "sassblock": {
+      "begin": "(\\s*)(:)(s[ca]ss)\\s*",
+      "end": "^(?!(\\1\\s+|\\s*$))",
+      "patterns": [
+        { "include": "source.sass" }
+      ],
+      "beginCaptures": {
+        "2": { "name": "constant.other.niml" },
+        "3": { "name": "constant.language.niml" }
+      }
+    },
+    "jsblock": {
+      "begin": "(\\s*)(:)(javascript)\\s*",
+      "end": "^(?!(\\1\\s+|\\s*$))",
+      "patterns": [
+        { "include": "source.js" }
+      ],
+      "beginCaptures": {
+        "2": { "name": "constant.other.niml" },
+        "3": { "name": "constant.language.niml" }
+      }
+    },
+    "cocoblock": {
+      "begin": "(\\s*)(:)(coco)\\s*",
+      "end": "^(?!(\\1\\s+|\\s*$))",
+      "patterns": [
+        { "include": "source.coco" }
+      ],
+      "beginCaptures": {
+        "2": { "name": "constant.other.niml" },
+        "3": { "name": "constant.language.niml" }
+      }
+    },
+    "coffeeblock": {
+      "begin": "(\\s*)(:)(coffee(script)?)\\s*",
+      "end": "^(?!(\\1\\s+|\\s*$))",
+      "patterns": [
+        { "include": "source.coffee" }
+      ],
+      "beginCaptures": {
+        "2": { "name": "constant.other.niml" },
+        "3": { "name": "constant.language.niml" }
+      }
+    },
+    "comment": {
+      "match": "#\\s+.*$",
+      "comment": "Comment",
+      "name": "comment.line.niml"
+    },
+    "paren": {
+      "begin": "\\(",
+      "end": "\\)",
+      "name": "support.other.niml",
+      "patterns": [
+        { "include": "#paren" },
+        { "include": "#expression" }
+      ]
+    },
+    "brackets": {
+      "begin": "\\[",
+      "end": "\\]",
+      "name": "support.other.niml",
+      "patterns": [
+        { "include": "#brackets" },
+        { "include": "#expression" }
+      ]
+    },
+    "dotvar": {
+      "begin": "(\\.[a-zA-Z_][a-zA-Z0-9_]*)+(?=(\\(|\\[)?)",
+      "end": "(?=(\\.(?![a-zA-Z0-9_])|[^\\(\\[\\.]))",
+      "name": "support.other.niml",
+      "patterns": [
+        { "include": "#paren" },
+        { "include": "#brackets" },
+        { "include": "#dotvar" }
+      ]
+    },
+    "variable": {
+      "begin": "\\$[a-zA-Z_][a-zA-Z0-9_]*(\\.[a-zA-Z_][a-zA-Z0-9_]*)*(?=(\\(|\\[)?)",
+      "end": "(?=(\\.(?![a-zA-Z0-9_])|[^\\(\\[\\.]))",
+      "name": "support.other.niml",
+      "patterns": [
+        { "include": "#paren" },
+        { "include": "#brackets" },
+        { "include": "#dotvar" }
+      ]
+    },
+    "tag": {
+      "match": "@/?[-$:\\w]+",
+      "comment": "Tag Name",
+      "name": "entity.niml"
+    },
+    "singleprop": {
+      "begin": "\\\\",
+      "end": "(?=[^-:\\w\\$])",
+      "comment": "A single property like selected or multiple",
+      "name": "storage.type.niml",
+      "patterns": [
+        { "include": "#variable" }
+      ]
+    },
+    "class": {
+      "begin": "\\.",
+      "end": "(?=[^-:\\w\\$])",
+      "comment": "Class Names",
+      "name": "storage.type.niml",
+      "patterns": [
+        { "include": "#variable" }
+      ]
+    },
+    "id": {
+      "begin": "#",
+      "end": "(?=[^-:\\w\\$])",
+      "comment": "Class Names",
+      "name": "keyword.source.niml",
+      "patterns": [
+        { "include": "#variable" }
+      ]
+    },
+    "escape": {
+      "match": "\\\\.",
+      "name": "keyword.source.niml",
+      "comment": "An escape"
+    },
+    "attrib_string": {
+      "begin": "(\\w[-$:\\w]*=)(\")",
+      "end": "\\2",
+      "patterns": [
+        { "include": "#variable" },
+        { "include": "#escape" },
+        { "include": "source.jinja" }
+      ],
+      "name": "string.double-quote.niml",
+      "beginCaptures": {
+        "1" : { "name": "keyword.source.niml" }
+      }
+    },
+    "attrib_noquote": {
+      "begin": "(\\w[-$:\\w]*=)",
+      "end": "(?=(\\s|$))",
+      "patterns": [
+        { "include": "#variable" },
+        { "include": "source.jinja" }
+      ],
+      "name": "string.double-quote.niml",
+      "beginCaptures": {
+        "1" : { "name": "keyword.source.niml" }
+      }
+    },
+    "attrib" : {
+      "patterns": [
+        { "include": "#attrib_string" },
+        { "include": "#attrib_noquote" }
+      ]
+    },
+    "escaped_char": {
+      "match": "\\\\x[0-9A-F]{2}",
+      "name": "constant.character.escape.hex.jinja"
+    },
+    "escaped_unicode_char": {
+      "captures": {
+        "1": { "name": "constant.character.escape.unicode.16-bit-hex.jinja" },
+        "2": { "name": "constant.character.escape.unicode.32-bit-hex.jinja" },
+        "3": { "name": "constant.character.escape.unicode.name.jinja" }
+      },
+      "match": "(\\\\U[0-9A-Fa-f]{8})|(\\\\u[0-9A-Fa-f]{4})|(\\\\N\\{[a-zA-Z ]+\\})"
+    },
+    "expression": {
+      "patterns": [
+        {
+          "captures": {
+            "1": { "name": "keyword.control.niml" },
+            "2": { "name": "variable.other.niml.block" }
+          },
+          "match": "\\s*\\b(block)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\b"
+        },
+        {
+          "captures": {
+            "1": { "name": "keyword.control.niml" },
+            "2": { "name": "variable.other.niml.filter" }
+          },
+          "match": "\\s*\\b(filter)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\b"
+        },
+        {
+          "captures": {
+            "1": { "name": "keyword.control.niml" }
+          },
+          "match": "(?<=%-|%)\\s*\\b([a-zA-Z_][a-zA-Z0-9_]*)\\b(?!\\s*[,=])"
+        },
+        {
+          "captures": {
+            "1": { "name": "keyword.control.niml" },
+            "2": { "name": "variable.other.niml.test" }
+          },
+          "match": "\\s*\\b(is)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\b"
+        },
+        {
+          "match": "\\b(and|else|if|in|import|not|or|recursive|with(out)?\\s+context)\\b",
+          "name": "keyword.control.niml"
+        },
+        {
+          "match": "\\b(true|false|none)\\b",
+          "name": "constant.language.niml"
+        },
+        {
+          "match": "\\b(loop|super|self|varargs|kwargs)\\b",
+          "name": "variable.language.niml"
+        },
+        {
+          "match": "[a-zA-Z_][a-zA-Z0-9_]*",
+          "name": "variable.other.niml"
+        },
+        {
+          "match": "(\\+|\\-|\\*\\*|\\*|//|/|%)",
+          "name": "keyword.operator.arithmetic.niml"
+        },
+        {
+          "captures": {
+            "1": { "name": "punctuation.other.niml" },
+            "2": { "name": "variable.other.niml.filter" }
+          },
+          "match": "(\\|)([a-zA-Z_][a-zA-Z0-9_]*)"
+        },
+        {
+          "captures": {
+            "1": { "name": "punctuation.other.niml" },
+            "2": { "name": "variable.other.niml.attribute" }
+          },
+          "match": "(\\.)([a-zA-Z_][a-zA-Z0-9_]*)"
+        },
+        {
+          "begin": "\\[",
+          "captures": {
+            "0": { "name": "punctuation.other.niml" }
+          },
+          "end": "\\]",
+          "patterns": [
+            {
+              "include": "#expression"
+            }
+          ]
+        },
+        {
+          "begin": "\\(",
+          "captures": {
+            "0": { "name": "punctuation.other.niml" }
+          },
+          "end": "\\)",
+          "patterns": [
+            {
+              "include": "#expression"
+            }
+          ]
+        },
+        {
+          "begin": "\\{",
+          "captures": {
+            "0": { "name": "punctuation.other.niml" }
+          },
+          "end": "\\}",
+          "patterns": [
+            {
+              "include": "#expression"
+            }
+          ]
+        },
+        {
+          "match": "(\\.|:|\\||,)",
+          "name": "punctuation.other.niml"
+        },
+        {
+          "match": "(==|&lt;=|=&gt;|&lt;|&gt;|!=)",
+          "name": "keyword.operator.comparison.niml"
+        },
+        {
+          "match": "=",
+          "name": "keyword.operator.assignment.niml"
+        },
+        {
+          "begin": "\"",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.string.begin.niml" }
+          },
+          "end": "\"",
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.string.end.niml" }
+          },
+          "name": "string.quoted.double.niml",
+          "patterns":          [
+            {
+              "include": "#string"
+            }
+          ]
+        },
+        {
+          "begin": "'",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.string.begin.niml" }
+          },
+          "end": "'",
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.string.end.niml" }
+          },
+          "name": "string.quoted.single.niml",
+          "patterns": [
+            {
+              "include": "#string"
+            }
+          ]
+        },
+        {
+          "begin": "@/",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.regexp.begin.niml" }
+          },
+          "end": "/",
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.regexp.end.niml" }
+          },
+          "name": "string.regexp.niml",
+          "patterns": [
+            {
+              "include": "#simple_escapes"
+            }
+          ]
+        }
+      ]
+    },
+    "simple_escapes": {
+      "captures": {
+        "1": { "name": "constant.character.escape.newline.niml" },
+        "10": {
+          "name": "constant.character.escape.tab.niml"
+        },
+        "11": {
+          "name": "constant.character.escape.vertical-tab.niml"
+        },
+        "2": { "name": "constant.character.escape.backlash.niml" },
+        "3": { "name": "constant.character.escape.double-quote.niml" },
+        "4": { "name": "constant.character.escape.single-quote.niml" },
+        "5": { "name": "constant.character.escape.bell.niml" },
+        "6": { "name": "constant.character.escape.backspace.niml" },
+        "7": { "name": "constant.character.escape.formfeed.niml" },
+        "8": { "name": "constant.character.escape.linefeed.niml" },
+        "9": { "name": "constant.character.escape.return.niml" }
+      },
+      "match": "(\\\\\\n)|(\\\\\\\\)|(\\\\\\\")|(\\\\')|(\\\\a)|(\\\\b)|(\\\\f)|(\\\\n)|(\\\\r)|(\\\\t)|(\\\\v)"
+    },
+    "string": {
+      "patterns": [
+        {
+          "include": "#simple_escapes"
+        },
+        {
+          "include": "#escaped_char"
+        },
+        {
+          "include": "#escaped_unicode_char"
+        }
+      ]
+    }
+  },
+  "uuid": "3814d5f3-a8c7-4590-89cc-b9e343b7aef6"
+}
