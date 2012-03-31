@@ -7,6 +7,7 @@
     { "include": "#tagblock" },
     { "include": "#variable" },
     { "include": "#comment" },
+    { "include": "#stylusblock" },
     { "include": "#cssblock" },
     { "include": "#sassblock" },
     { "include": "#cocoblock" },
@@ -43,6 +44,17 @@
       "begin": "(\\s*)(:)(plain)\\s*",
       "end": "^(?!(\\1\\s+|\\s*$))",
       "patterns": [
+      ],
+      "beginCaptures": {
+        "2": { "name": "constant.other.niml" },
+        "3": { "name": "constant.language.niml" }
+      }
+    },
+    "stylusblock": {
+      "begin": "(\\s*)(:)(stylus)\\s*",
+      "end": "^(?!(\\1\\s+|\\s*$))",
+      "patterns": [
+        { "include": "source.stylus" }
       ],
       "beginCaptures": {
         "2": { "name": "constant.other.niml" },

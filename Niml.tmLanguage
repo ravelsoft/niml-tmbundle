@@ -32,6 +32,10 @@
 		</dict>
 		<dict>
 			<key>include</key>
+			<string>#stylusblock</string>
+		</dict>
+		<dict>
+			<key>include</key>
 			<string>#cssblock</string>
 		</dict>
 		<dict>
@@ -860,6 +864,33 @@
 				<dict>
 					<key>include</key>
 					<string>#escaped_unicode_char</string>
+				</dict>
+			</array>
+		</dict>
+		<key>stylusblock</key>
+		<dict>
+			<key>begin</key>
+			<string>(\s*)(:)(stylus)\s*</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>constant.other.niml</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>constant.language.niml</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>^(?!(\1\s+|\s*$))</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>source.stylus</string>
 				</dict>
 			</array>
 		</dict>
